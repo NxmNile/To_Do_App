@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'todo_list.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
   @override
@@ -61,7 +61,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 50,),
                   ElevatedButton(onPressed: (){
-                    if(_formKey.currentState!.validate()){}
+                    if(_formKey.currentState!.validate()){
+                      _navigatorKey.currentState?.push(
+                        MaterialPageRoute(builder: (context)=> TodoList(username: _usernameController.text,))
+                      );
+                    }
                   }, child: const Text('Login', style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF9C6CFE),),)
                 ]),),),
