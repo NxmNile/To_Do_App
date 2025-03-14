@@ -178,7 +178,53 @@ class _TodoListState extends State<TodoList> {
         });
   }
   void _editTask(int todoIndex){
-
+    TextEditingController taskController =
+    TextEditingController(text: todoList[todoIndex]["content"]);
+    void editSubmission(String value) {
+      final bool isNotBlank = !RegExp(r"^\s*$").hasMatch(value);
+      if (value.isNotEmpty && isNotBlank) {
+        setState(() {
+          todoList[todoIndex]["content"] = value.trim();
+        });
+        Future.delayed(Duration(milliseconds: 300), () {
+          alert(context: context, title: "Success", message: "Task edited successfully");
+        });
+      } else {
+        alert(context: context, title: "Error", message: "Task cannot be empty");
+      }
+    }
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: const Text('Edit Task'),
+            content: TextField(
+          autofocus: true,
+            controller: taskController,
+          onSubmitted: (val)=> editSubmission(val),
+          decoration: const InputDecoration(
+          hintText: 'Edit your task ',
+          contentPadding:  EdgeInsets.all(16.0),
+          ),
+          ),
+          actions: [
+            TextButton.icon(
+              onPressed: (){
+                editSubmission(taskController.text);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.edit),
+              label: const Text('Edit Task'),
+            ),
+            TextButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            )
+          ],
+          );
+        });
   }
   void _deleteTask(int todoIndex){
     setState(() {
