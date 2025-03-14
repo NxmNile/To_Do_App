@@ -12,8 +12,10 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  static const IconData iconItemUndone = Icons.radio_button_unchecked_rounded;
-  static const IconData iconItemDone = Icons.radio_button_checked_rounded;
+  static const IconData iconItemUndone = Icons.check_box_outline_blank_rounded;
+  static const IconData iconItemDone = Icons.check_box_rounded;
+  static const IconData iconItemDelete = Icons.delete_outline_rounded;
+  static const IconData iconItemEdit = Icons.edit;
   bool isAddButtonSelcted = false;
   List<Map<String, dynamic>> todoList = [
     {
