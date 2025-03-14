@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/add_to_do_list.dart';
 import 'login_page.dart';
 import 'tools.dart';
 class TodoList extends StatefulWidget {
@@ -29,41 +28,63 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo List for ${widget.username}', style: TextStyle(color: Colors.white),),
+        title:
+        Text('Todo List for ${widget.username}', style: TextStyle(color: Colors.white),),
         backgroundColor: Color(0xFF9C6CFE),
       ),
-      body: todoListSection(),  // Use Stack to overlay widgets
+      body:
+
+          todoListSection(),
       floatingActionButton: todoButtonSection(),
 
     );
   }
   Widget todoListSection(){
-    Widget todoItem(int todoIndex){
-      return ListTile(
-        title: Text(todoList[todoIndex]["content"]),
-        trailing: IconButton(
-          icon: Icon(todoList[todoIndex]["icon"]),
-          onPressed: (){
-            setState(() {
-              if(todoList[todoIndex]["status"] == "undone"){
-                todoList[todoIndex]["status"] = "done";
-                todoList[todoIndex]["icon"] = iconItemDone;
-              }
-              else{
-                todoList[todoIndex]["status"] = "undone";
-                todoList[todoIndex]["icon"] = iconItemUndone;
-              }
-            });
-          },
+    Widget todoItem(int todoIndex) {
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5), // กำหนด margin
+        padding: EdgeInsets.symmetric(horizontal: 10), // เพิ่ม padding
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10), // มุมโค้ง
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              spreadRadius: 2,
+              offset: Offset(2, 2),
+            )
+          ],
         ),
-        onLongPress: ()=> _onItemLongPress(todoIndex), // Add onLongPress
+        child: ListTile(
+          title: Text(todoList[todoIndex]["content"]),
+          trailing: IconButton(
+            icon: Icon(todoList[todoIndex]["icon"]),
+            onPressed: () {
+              setState(() {
+                if (todoList[todoIndex]["status"] == "undone") {
+                  todoList[todoIndex]["status"] = "done";
+                  todoList[todoIndex]["icon"] = iconItemDone;
+                } else {
+                  todoList[todoIndex]["status"] = "undone";
+                  todoList[todoIndex]["icon"] = iconItemUndone;
+                }
+              });
+            },
+          ),
+          onLongPress: () => _onItemLongPress(todoIndex),
+        ),
       );
     }
-    return ListView.builder(
-      itemCount: todoList.length,
-      itemBuilder: (context, index) {
-        return todoItem(index);
-      },
+
+    return Padding(
+      padding: EdgeInsets.only(top: 16), // Add space between the list and the AppBar
+      child: ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (context, index) {
+          return todoItem(index);
+        },
+      ),
     );
   }
   Widget todoButtonSection(){
@@ -213,8 +234,8 @@ class _TodoListState extends State<TodoList> {
                 editSubmission(taskController.text);
                 Navigator.pop(context);
               },
-              icon: const Icon(Icons.edit),
-              label: const Text('Edit Task'),
+              icon: const Icon(Icons.save_alt),
+              label: const Text('Save'),
             ),
             TextButton(
               onPressed: (){
