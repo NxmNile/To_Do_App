@@ -56,6 +56,7 @@ class _TodoListState extends State<TodoList> {
             });
           },
         ),
+        onLongPress: ()=> _onItemLongPress(todoIndex), // Add onLongPress
       );
     }
     return ListView.builder(
@@ -145,6 +146,43 @@ class _TodoListState extends State<TodoList> {
             Icon : Icons.add_circle_rounded;
             isAddButtonSelcted = false;
           }));
+    });
+  }
+  void _onItemLongPress(int todoIndex){
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context){
+          return Container(
+            height: 200,
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(iconItemEdit),
+                  title: Text('Edit'),
+                  onTap: (){
+                    Navigator.pop(context);
+                    _editTask(todoIndex);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(iconItemDelete),
+                  title: Text('Delete'),
+                  onTap: (){
+                    Navigator.pop(context);
+                    _deleteTask(todoIndex);
+                  },
+                ),
+              ],
+            ),
+          );
+        });
+  }
+  void _editTask(int todoIndex){
+
+  }
+  void _deleteTask(int todoIndex){
+    setState(() {
+      todoList.removeAt(todoIndex);
     });
   }
 }
